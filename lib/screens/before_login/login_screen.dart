@@ -96,8 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     .shadow,
                 fontSize: 15,
                 fontWeight: FontWeight.w500),
-
-
+            
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColor
