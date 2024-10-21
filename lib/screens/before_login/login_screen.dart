@@ -85,43 +85,28 @@ class _LoginScreenState extends State<LoginScreen> {
             hintText: hintText,
             // labelText: hintText,
             labelStyle: GoogleFonts.montserrat(
-                color: AppColor
-                    .instance()
-                    .shadow,
+                color: AppColor.instance().shadow,
                 fontSize: 15,
                 fontWeight: FontWeight.w500),
             hintStyle: GoogleFonts.montserrat(
-                color: AppColor
-                    .instance()
-                    .shadow,
+                color: AppColor.instance().shadow,
                 fontSize: 15,
                 fontWeight: FontWeight.w500),
-            
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColor
-                        .instance()
-                        .shadow, width: 1)),
-
+                borderSide:
+                    BorderSide(color: AppColor.instance().shadow, width: 1)),
             border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColor
-                        .instance()
-                        .shadow, width: 0.2)),
-
+                borderSide:
+                    BorderSide(color: AppColor.instance().shadow, width: 0.2)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: AppColor
-                        .instance()
-                        .button_color, width: 2)),
+                    color: AppColor.instance().button_color, width: 2)),
             errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColor
-                        .instance()
-                        .error, width: 2))),
-
+                borderSide:
+                    BorderSide(color: AppColor.instance().error, width: 2))),
       );
     }
+
     return Form(
       child: Column(
         children: [

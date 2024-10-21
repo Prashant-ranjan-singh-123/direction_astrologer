@@ -1,4 +1,4 @@
-package com.example.direction_astrologer
+package com.partner.direction
 
 import io.flutter.embedding.android.FlutterActivity
 
