@@ -7,7 +7,7 @@ class LoginCheckCubit extends Cubit<LoginCheckState>{
   LoginCheckCubit() : super(LoginCheckState(true, null));
 
   Future<void> token_check_logic() async {
-    await SharedPreferenceLogic.setLoginFalse();
+    // await SharedPreferenceLogic.setLoginFalse();
     // await SharedPreferenceLogic.setLoginTrue();
     bool is_login = await SharedPreferenceLogic.isLogIn();
     if(is_login){

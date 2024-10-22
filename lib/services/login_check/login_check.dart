@@ -1,3 +1,4 @@
+import 'package:direction_astrologer/screens/after_login/chating/chat/chat_screen_cubit.dart';
 import 'package:direction_astrologer/screens/before_login/login_screen.dart';
 import 'package:direction_astrologer/services/login_check/login_check_cubit.dart';
 import 'package:direction_astrologer/services/login_check/login_check_state.dart';
@@ -46,7 +47,7 @@ class _LoginCheckState extends State<LoginCheck> {
 
   Widget _token() {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => ChatScreenCubit(),
       child: const ChatScreen(),
     );
   }

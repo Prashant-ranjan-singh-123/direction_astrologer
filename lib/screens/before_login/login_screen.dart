@@ -1,7 +1,10 @@
+import 'package:direction_astrologer/main.dart';
+import 'package:direction_astrologer/state_management/bloc/login_cubit.dart';
 import 'package:direction_astrologer/utils/assets.dart';
 import 'package:direction_astrologer/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,6 +15,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController _email;
+  late TextEditingController _pass;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _email = TextEditingController();
+    _pass = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _email.dispose();
+    _pass.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _padding_beteen_widget(),
                   _form_field(),
                   _padding_beteen_widget(small: false),
-                  _submit_button(width: width, height: height),
+                  _submitButton(width: width, height: height*0.06, context: context),
                   _padding_beteen_widget(),
                 ],
               ),
@@ -79,8 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _form_field() {
-    TextFormField field({required String hintText}) {
+    TextFormField field({required String hintText, required TextEditingController controller}) {
       return TextFormField(
+        controller: controller,
         decoration: InputDecoration(
             hintText: hintText,
             // labelText: hintText,
@@ -110,9 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Form(
       child: Column(
         children: [
-          field(hintText: 'Username'),
+          field(hintText: 'Username', controller: _email),
           _padding_beteen_widget(),
-          field(hintText: 'Password'),
+          field(hintText: 'Password', controller: _pass),
         ],
       ),
     );
@@ -126,22 +149,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _submit_button({required double width, required double height}) {
+  Widget _submitButton({
+    required BuildContext context, // Add context parameter
+    required double width,
+    required double height,
+  }) {
     return SizedBox(
-      width: double.infinity,
+      width: width, // Use provided width
+      height: height, // Use provided height
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.instance().button_color,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7))),
-          onPressed: () {},
-          child: Text(
-            'Continue',
-            style: GoogleFonts.montserrat(
-                color: AppColor.instance().white,
-                fontSize: 18,
-                fontWeight: FontWeight.w500),
-          )),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.instance().button_color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(7),
+          ),
+        ),
+        onPressed: () {
+          // Ensure context is correctly passed for LoginCubit
+          context.read<LoginCubit>().login(
+              email: _email.text.toString(),
+              pass: _pass.text.toString(),
+              context: context);
+        },
+        child: Text(
+          'Continue',
+          style: GoogleFonts.montserrat(
+            color: AppColor.instance().white,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
     );
   }
 }
