@@ -1,3 +1,5 @@
+import 'package:direction_astrologer/screens/splash_screen/splash_screen.dart';
+import 'package:direction_astrologer/screens/splash_screen/splash_screen_cubit.dart';
 import 'package:direction_astrologer/services/login_check/login_check.dart';
 import 'package:direction_astrologer/services/login_check/login_check_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,8 +21,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Direction Doctor',
         home: BlocProvider(
-          create: (context) => LoginCheckCubit(),
-          child: const LoginCheck(),
+          create: (context) => SplashScreenCubit(),
+          child: const SplashScreen(),
         ));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:direction_astrologer/main.dart';
 import 'package:direction_astrologer/state_management/bloc/login_cubit.dart';
+import 'package:direction_astrologer/state_management/states/login_state.dart';
 import 'package:direction_astrologer/utils/assets.dart';
 import 'package:direction_astrologer/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   _padding_beteen_widget(),
                   _form_field(),
                   _padding_beteen_widget(small: false),
-                  _submitButton(width: width, height: height*0.06, context: context),
+                  _submitButton(
+                      width: width, height: height * 0.06, context: context),
                   _padding_beteen_widget(),
                 ],
               ),
@@ -101,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _form_field() {
-    TextFormField field({required String hintText, required TextEditingController controller}) {
+    TextFormField field(
+        {required String hintText, required TextEditingController controller}) {
       return TextFormField(
         controller: controller,
         decoration: InputDecoration(
@@ -150,36 +153,46 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _submitButton({
-    required BuildContext context, // Add context parameter
+    required BuildContext context,
     required double width,
     required double height,
   }) {
-    return SizedBox(
-      width: width, // Use provided width
-      height: height, // Use provided height
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.instance().button_color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7),
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        return SizedBox(
+          width: width,
+          height: height,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColor.instance().button_color,
+              disabledBackgroundColor: AppColor.instance().button_color,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7),
+              ),
+            ),
+            onPressed: state.loading
+                ? null
+                : () {
+                    context.read<LoginCubit>().login(
+                        email: _email.text.toString(),
+                        pass: _pass.text.toString(),
+                        context: context);
+                  },
+            child: state.loading
+                ? CircularProgressIndicator.adaptive(
+                    backgroundColor: AppColor.instance().white,
+                  )
+                : Text(
+                    'Continue',
+                    style: GoogleFonts.montserrat(
+                      color: AppColor.instance().white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
           ),
-        ),
-        onPressed: () {
-          // Ensure context is correctly passed for LoginCubit
-          context.read<LoginCubit>().login(
-              email: _email.text.toString(),
-              pass: _pass.text.toString(),
-              context: context);
-        },
-        child: Text(
-          'Continue',
-          style: GoogleFonts.montserrat(
-            color: AppColor.instance().white,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

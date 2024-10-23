@@ -9,13 +9,16 @@ import '../../screens/after_login/chating/chat_screen.dart';
 import '../states/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginState());
+  LoginCubit() : super(LoginState(loading: false));
 
   Future<void> login({
     required String email,
     required String pass,
     required BuildContext context,
   }) async {
+
+    emit(state.copyWith(loading: true));
+
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     print('email: ${email.trim()}');
@@ -35,6 +38,7 @@ class LoginCubit extends Cubit<LoginState> {
         print('User signed in: ${userCred.user!.email}');
         // Redirect to HomeScreen or desired screen
         await SharedPreferenceLogic.setLoginTrue();
+        emit(state.copyWith(loading: false));
         AppDialog.instance().infoDialog(
             context: context,
             title: 'Login Success',
@@ -52,8 +56,11 @@ class LoginCubit extends Cubit<LoginState> {
             },
           actionName: 'Get Started'
         );
+      }else{
+        emit(state.copyWith(loading: false));
       }
     } on FirebaseAuthException catch (e) {
+      emit(state.copyWith(loading: false));
       // Handle specific FirebaseAuth errors
       AppDialog.instance().infoDialog(
           context: context,
@@ -67,6 +74,7 @@ class LoginCubit extends Cubit<LoginState> {
       //   showSnackBar(context, 'Login failed: ${e.message}');
       // }
     } catch (e) {
+      emit(state.copyWith(loading: false));
       // Handle any other errors
       showSnackBar(context, 'An unexpected error occurred: $e');
     }
