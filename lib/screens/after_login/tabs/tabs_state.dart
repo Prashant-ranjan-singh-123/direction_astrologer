@@ -1,6 +1,15 @@
 part of 'tabs_cubit.dart';
 
-@immutable
-sealed class TabsState {}
+class TabsState extends Equatable {
+  int index;
+  TabsState(this.index);
 
-final class TabsInitial extends TabsState {}
+  TabsState copyWidth({
+    int? index
+}){
+    return TabsState(index ?? this.index);
+}
+
+  @override
+  List<Object?> get props => [index];
+}

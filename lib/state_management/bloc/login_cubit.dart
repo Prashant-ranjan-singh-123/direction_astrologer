@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../screens/after_login/chating/chat_screen.dart';
+import '../../screens/after_login/tabs/tab_ui.dart';
 import '../states/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -48,10 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                      create: (context) => ChatScreenCubit(),
-                      child: ChatScreen(),
-                    )),
+                    builder: (context) => TabUi()),
               );
             },
           actionName: 'Get Started'

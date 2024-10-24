@@ -5,6 +5,7 @@ class AppAssets{
   //png
   String png_no_internet_text = 'assets/png/no_internet_text.png';
   String png_splash_family = 'assets/png/splash_family.png';
+  String png_doctor_one = 'assets/png/doctor_one.png';
 
   //svg
   String svg_full_logo = 'assets/svg/full_logo.svg';
