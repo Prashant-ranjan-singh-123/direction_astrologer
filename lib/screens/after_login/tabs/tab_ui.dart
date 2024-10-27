@@ -1,3 +1,4 @@
+import 'package:direction_astrologer/screens/after_login/profile/profile_page_after_login_cubit.dart';
 import 'package:direction_astrologer/screens/after_login/tabs/tabs_cubit.dart';
 import 'package:direction_astrologer/utils/assets.dart';
 import 'package:direction_astrologer/utils/colors.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../utils/app_constants.dart';
 
 class TabUi extends StatefulWidget {
   const TabUi({super.key});
@@ -59,13 +62,22 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(AppAssets.instance().png_doctor_one),
+                    child: GestureDetector(
+                      onTap: (){
+                        context.read<TabsCubit>().open_profile_page(context: context);
+                      },
+                      child: Hero(
+                        tag: AppConstants.instance().heroPhofilePhoto,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(AppAssets.instance().png_doctor_one),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
               body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _tabs(),
                   Expanded(
@@ -95,8 +107,9 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
         // Change cubit index on tab tap
         context.read<TabsCubit>().changeIndex(index);
       },
+      overlayColor: WidgetStatePropertyAll(AppColor.instance().button_color.withOpacity(0.08)),
       isScrollable: true,
-      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
+      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(
           color: AppColor.instance().header_light_green,
@@ -106,7 +119,6 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
         ),
-        insets: const EdgeInsets.symmetric(horizontal: 1.0),
       ),
       unselectedLabelStyle: GoogleFonts.montserrat(fontWeight: FontWeight.w400),
       labelStyle: GoogleFonts.montserrat(
@@ -120,3 +132,4 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
     );
   }
 }
+

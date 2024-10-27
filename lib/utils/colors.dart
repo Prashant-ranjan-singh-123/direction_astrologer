@@ -12,4 +12,5 @@ class AppColor{
   Color header_light_green = const Color.fromRGBO(96, 172, 172, 1);
   Color header_light_green_original = const Color.fromRGBO(230, 239, 238, 1);
   Color error = const Color.fromRGBO(236, 86, 86, 1);
+  Color black = const Color.fromRGBO(0, 0, 0, 1.0);
 }

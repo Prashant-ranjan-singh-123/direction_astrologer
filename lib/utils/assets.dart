@@ -10,6 +10,9 @@ class AppAssets{
   //svg
   String svg_full_logo = 'assets/svg/full_logo.svg';
   String svg_only_brand_logo = 'assets/svg/only_brand_logo.svg';
+  String svg_shield = 'assets/svg/Shield.svg';
+  String svg_log_out = 'assets/svg/Logout.svg';
+  String svg_whatsapp = 'assets/svg/whatsapp.svg';
 
   //fonts
 
