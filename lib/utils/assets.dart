@@ -13,6 +13,8 @@ class AppAssets{
   String svg_shield = 'assets/svg/Shield.svg';
   String svg_log_out = 'assets/svg/Logout.svg';
   String svg_whatsapp = 'assets/svg/whatsapp.svg';
+  String svg_empty_chat = 'assets/svg/empty_chat.svg';
+  String svg_empty_call = 'assets/svg/empty_call.svg';
 
   //fonts
 

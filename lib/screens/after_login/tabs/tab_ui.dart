@@ -1,3 +1,7 @@
+import 'package:direction_astrologer/screens/after_login/calling/call/calling_cubit.dart';
+import 'package:direction_astrologer/screens/after_login/calling/calling_screen.dart';
+import 'package:direction_astrologer/screens/after_login/chating/chat/chat_screen_cubit.dart';
+import 'package:direction_astrologer/screens/after_login/chating/chat_screen.dart';
 import 'package:direction_astrologer/screens/after_login/profile/profile_page_after_login_cubit.dart';
 import 'package:direction_astrologer/screens/after_login/tabs/tabs_cubit.dart';
 import 'package:direction_astrologer/utils/assets.dart';
@@ -53,23 +57,28 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
             length: 2,
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: AppColor.instance().header_light_green_original,
+                backgroundColor:
+                    AppColor.instance().header_light_green_original,
                 leading: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: SvgPicture.asset(AppAssets.instance().svg_only_brand_logo),
+                  child: SvgPicture.asset(
+                      AppAssets.instance().svg_only_brand_logo),
                 ),
                 leadingWidth: 80,
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: GestureDetector(
-                      onTap: (){
-                        context.read<TabsCubit>().open_profile_page(context: context);
+                      onTap: () {
+                        context
+                            .read<TabsCubit>()
+                            .open_profile_page(context: context);
                       },
                       child: Hero(
                         tag: AppConstants.instance().heroPhofilePhoto,
                         child: CircleAvatar(
-                          backgroundImage: AssetImage(AppAssets.instance().png_doctor_one),
+                          backgroundImage:
+                              AssetImage(AppAssets.instance().png_doctor_one),
                         ),
                       ),
                     ),
@@ -96,8 +105,14 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
   }
 
   List<Widget> pages = [
-    Center(child: Text('Chat')),
-    Center(child: Text('Calling')),
+    BlocProvider(
+      create: (context) => ChatScreenCubit(),
+      child: ChatScreen(),
+    ),
+    BlocProvider(
+      create: (context) => CallingCubit(),
+      child: CallingScreen(),
+    ),
   ];
 
   Widget _tabs() {
@@ -107,7 +122,8 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
         // Change cubit index on tab tap
         context.read<TabsCubit>().changeIndex(index);
       },
-      overlayColor: WidgetStatePropertyAll(AppColor.instance().button_color.withOpacity(0.08)),
+      overlayColor: WidgetStatePropertyAll(
+          AppColor.instance().button_color.withOpacity(0.08)),
       isScrollable: true,
       padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.04),
       indicator: UnderlineTabIndicator(
@@ -132,4 +148,3 @@ class _TabUiState extends State<TabUi> with SingleTickerProviderStateMixin {
     );
   }
 }
-
