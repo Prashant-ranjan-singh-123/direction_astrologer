@@ -4,4 +4,5 @@ class AppSharedPreferenceConst{
 
   String token = 'token';
   String isLogin = 'isLogin';
+  String email = 'email';
 }

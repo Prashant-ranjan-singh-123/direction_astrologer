@@ -16,11 +16,19 @@ class SharedPreferenceLogic{
   static Future<void> setLoginFalse() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setBool(AppSharedPreferenceConst.instance().isLogin, false);
+    pref.remove(AppSharedPreferenceConst.instance().isLogin);
   }
 
-  static Future<void> setLoginTrue() async {
+  static Future<void> setLoginTrue({required String email}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString(AppSharedPreferenceConst.instance().email, email);
     pref.setBool(AppSharedPreferenceConst.instance().isLogin, true);
+  }
+
+  static Future<String?> getEmail() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? email = pref.getString(AppSharedPreferenceConst.instance().email);
+    return email;
   }
 
   // static Future<bool> isfreshInstall() async {

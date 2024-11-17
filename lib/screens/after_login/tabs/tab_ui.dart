@@ -14,7 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/app_constants.dart';
 
 class TabUi extends StatefulWidget {
-  const TabUi({super.key});
+  TabUi({super.key});
 
   @override
   State<TabUi> createState() => _TabUiState();

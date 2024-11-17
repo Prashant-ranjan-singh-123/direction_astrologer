@@ -38,7 +38,7 @@ class LoginCubit extends Cubit<LoginState> {
       if (userCred.user != null) {
         print('User signed in: ${userCred.user!.email}');
         // Redirect to HomeScreen or desired screen
-        await SharedPreferenceLogic.setLoginTrue();
+        await SharedPreferenceLogic.setLoginTrue(email: email.toLowerCase());
         emit(state.copyWith(loading: false));
         AppDialog.instance().infoDialog(
             context: context,
@@ -46,6 +46,7 @@ class LoginCubit extends Cubit<LoginState> {
             content: 'Welcome to our app, Login Success',
             onActionPressed: (){
               Navigator.of(context).pop(); // Close the dialog
+              SharedPreferenceLogic.setLoginTrue(email: email.toLowerCase());
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

@@ -64,6 +64,7 @@ dev_dependencies:
   flutter_bloc: ^8.1.6
   amplitude_flutter: ^3.13.0
   change_app_package_name: ^1.4.0
+  zego_zimkit: ^1.16.1
 
 flutter_launcher_icons:
   android: "launcher_icon"

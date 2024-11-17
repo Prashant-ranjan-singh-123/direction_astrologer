@@ -1,6 +1,18 @@
-part of 'chat_screen_cubit.dart';
+import 'package:equatable/equatable.dart';
 
-@immutable
-sealed class ChatScreenState {}
+class ChatScreenState extends Equatable {
+  bool loading;
+  String? email;
+  ChatScreenState({required this.loading, required this.email});
 
-final class ChatScreenInitial extends ChatScreenState {}
+  ChatScreenState copyWith({
+    bool? loading,
+    email,
+  }) {
+    return ChatScreenState(
+        loading: loading ?? this.loading, email: email ?? this.email);
+  }
+
+  @override
+  List<Object?> get props => [loading];
+}
