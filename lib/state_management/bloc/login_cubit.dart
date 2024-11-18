@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../screens/after_login/chating/chat_screen.dart';
 import '../../screens/after_login/tabs/tab_ui.dart';
+import '../../screens/after_login/tabs/tabs_cubit.dart';
 import '../states/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -17,7 +18,6 @@ class LoginCubit extends Cubit<LoginState> {
     required String pass,
     required BuildContext context,
   }) async {
-
     emit(state.copyWith(loading: true));
 
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,18 +44,22 @@ class LoginCubit extends Cubit<LoginState> {
             context: context,
             title: 'Login Success',
             content: 'Welcome to our app, Login Success',
-            onActionPressed: (){
+            onActionPressed: () {
               Navigator.of(context).pop(); // Close the dialog
               SharedPreferenceLogic.setLoginTrue(email: email.toLowerCase());
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TabUi()),
+                    builder: (context) =>
+                        BlocProvider(
+                          create: (context) => TabsCubit(),
+                          child: TabUi(),
+                        )),
               );
             },
-          actionName: 'Get Started'
+            actionName: 'Get Started'
         );
-      }else{
+      } else {
         emit(state.copyWith(loading: false));
       }
     } on FirebaseAuthException catch (e) {
@@ -65,13 +69,6 @@ class LoginCubit extends Cubit<LoginState> {
           context: context,
           title: 'Login Fail',
           content: 'Please verify id and password');
-      // if (e.code == 'user-not-found') {
-      //   showSnackBar(context, 'No user found for that email.');
-      // } else if (e.code == 'wrong-password') {
-      //   showSnackBar(context, 'Wrong password provided.');
-      // } else {
-      //   showSnackBar(context, 'Login failed: ${e.message}');
-      // }
     } catch (e) {
       emit(state.copyWith(loading: false));
       // Handle any other errors

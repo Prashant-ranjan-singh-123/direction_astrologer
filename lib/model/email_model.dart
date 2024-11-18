@@ -8,9 +8,24 @@ class EmailModel {
 }
 
 List<EmailModel> model = [
-  EmailModel(email: 'test1@gmail.com', userName: 'test1', userId: '1'),
-  EmailModel(email: 'test2@gmail.com', userName: 'test2', userId: '2'),
-  EmailModel(email: 'test3@gmail.com', userName: 'test3', userId: '3'),
-  EmailModel(email: 'test4@gmail.com', userName: 'test4', userId: '4'),
-  EmailModel(email: 'test5@gmail.com', userName: 'test5', userId: '5'),
+  EmailModel(
+      email: 'test1@gmail.com',
+      userName: 'Pastor',
+      userId: 'Pastor Joseph Fernandez'),
+  EmailModel(
+      email: 'test2@gmail.com',
+      userName: 'Father',
+      userId: 'Father Daniel Jones'),
+  EmailModel(
+      email: 'test3@gmail.com',
+      userName: 'Brother',
+      userId: 'Brother Ramesh Babu'),
+  EmailModel(
+      email: 'test4@gmail.com',
+      userName: 'Sister',
+      userId: 'Sister Leena Daisy'),
+  EmailModel(
+      email: 'test5@gmail.com',
+      userName: 'Rebecca',
+      userId: 'Pastor Rebecca Rosy'),
 ];

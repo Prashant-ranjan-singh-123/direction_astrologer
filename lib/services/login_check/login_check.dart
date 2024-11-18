@@ -13,6 +13,7 @@ import '../../screens/after_login/chating/chat_screen.dart';
 
 class LoginCheck extends StatefulWidget {
   const LoginCheck({super.key});
+
   @override
   State<LoginCheck> createState() => _LoginCheckState();
 }
@@ -48,7 +49,10 @@ class _LoginCheckState extends State<LoginCheck> {
   }
 
   Widget _token() {
-    return TabUi();
+    return BlocProvider(
+      create: (context) => TabsCubit(),
+      child: TabUi(),
+    );
   }
 
   Widget _no_token() {
