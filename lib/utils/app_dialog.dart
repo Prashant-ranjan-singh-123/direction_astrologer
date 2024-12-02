@@ -7,6 +7,7 @@ class AppDialog {
   // Static method to get an instance
   static AppDialog instance() => AppDialog._();
 
+
   // Method to show an adaptive info dialog
   void infoDialog({
     required BuildContext context,
