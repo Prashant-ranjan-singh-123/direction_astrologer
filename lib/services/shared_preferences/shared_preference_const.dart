@@ -5,4 +5,5 @@ class AppSharedPreferenceConst{
   String token = 'token';
   String isLogin = 'isLogin';
   String email = 'email';
+  String current_model_index = 'current_model_index';
 }

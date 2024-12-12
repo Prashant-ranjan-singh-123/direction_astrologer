@@ -6,12 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../model/email_model.dart';
 import '../../../services/shared_preferences/shared_preference_logic.dart';
 import 'profile_screen_after_login_state.dart';
 
 class ProfileScreenAfterLoginCubit extends Cubit<ProfileScreenAfterLoginState> {
   ProfileScreenAfterLoginCubit()
-      : super(ProfileScreenAfterLoginState(loading: true));
+      : super(ProfileScreenAfterLoginState(loading: true, photo: ''));
 
   Future<void> click_log_out({required BuildContext context}) async {
     confirm_logout(context: context);
@@ -24,25 +25,33 @@ class ProfileScreenAfterLoginCubit extends Cubit<ProfileScreenAfterLoginState> {
   Future<void> click_chat_support() async {
     await AppOpener.launchAppUsingUrl(
         link:
-        'https://wa.me/+917993478539?text=Hey,%20I%20downloaded%20direction%20-%20I%20am%20having%20a%20problem');
+            'https://wa.me/+917993478539?text=Hey,%20I%20downloaded%20direction%20-%20I%20am%20having%20a%20problem');
   }
 
   Future<void> setData() async {
     emit(state.copyWith(loading: true));
 
     final result = await Future.wait([
-      // AppUserDataLogic.get_image_url(),
+      SharedPreferenceLogic.get_current_model_index()
       // AppUserDataLogic.get_name(),
     ]);
 
+    int? modelIndex = result[0];
     // String? image = result[0];
     // String? name = result[1];
 
     // if (name != null) {
     //   emit(state.copyWith(loading: false, name: name, photo: image));
     // } else {
-    emit(
-        state.copyWith(loading: false, name: 'Sagar Dattatrey', photo: null));
+    emit(state.copyWith(
+        loading: false,
+        name: model[modelIndex!].userId,
+        photo: model[modelIndex!].image));
+
+    // emit(state.copyWith(
+    //     loading: false,
+    //     name: 'bshs',
+    //     photo: null));
   }
 
   void confirm_logout({required BuildContext context}) {
@@ -56,7 +65,7 @@ class ProfileScreenAfterLoginCubit extends Cubit<ProfileScreenAfterLoginState> {
           actions: [
             TextButton(
               style:
-              TextButton.styleFrom(splashFactory: NoSplash.splashFactory),
+                  TextButton.styleFrom(splashFactory: NoSplash.splashFactory),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -67,20 +76,19 @@ class ProfileScreenAfterLoginCubit extends Cubit<ProfileScreenAfterLoginState> {
             ),
             TextButton(
               style:
-              TextButton.styleFrom(splashFactory: NoSplash.splashFactory),
+                  TextButton.styleFrom(splashFactory: NoSplash.splashFactory),
               onPressed: () async {
                 Navigator.of(context).pop(); // Close the dialog
                 await _sign_out_logic(context: context);
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          BlocProvider(
+                      builder: (context) => BlocProvider(
                             create: (context) => LoginCheckCubit(),
                             child: LoginCheck(),
                           )), // Directly instantiate the screen
-                      (Route<dynamic> route) =>
-                  false, // This removes all previous routes
+                  (Route<dynamic> route) =>
+                      false, // This removes all previous routes
                 );
               },
               child: Text(
@@ -101,9 +109,9 @@ class ProfileScreenAfterLoginCubit extends Cubit<ProfileScreenAfterLoginState> {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => LoginCheckCubit(),
-              child: LoginCheck(),
-            )),
-            (Route<dynamic> route) => false);
+                  create: (context) => LoginCheckCubit(),
+                  child: LoginCheck(),
+                )),
+        (Route<dynamic> route) => false);
   }
 }

@@ -50,15 +50,13 @@ class LoginCubit extends Cubit<LoginState> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        BlocProvider(
+                    builder: (context) => BlocProvider(
                           create: (context) => TabsCubit(),
                           child: TabUi(),
                         )),
               );
             },
-            actionName: 'Get Started'
-        );
+            actionName: 'Get Started');
       } else {
         emit(state.copyWith(loading: false));
       }

@@ -1,7 +1,9 @@
 import 'package:direction_astrologer/services/shared_preferences/shared_preference_const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceLogic{
+import '../../model/email_model.dart';
+
+class SharedPreferenceLogic {
   static Future<bool> isLogIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     bool? isLogIn = pref.getBool(AppSharedPreferenceConst.instance().isLogin);
@@ -17,11 +19,20 @@ class SharedPreferenceLogic{
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setBool(AppSharedPreferenceConst.instance().isLogin, false);
     pref.remove(AppSharedPreferenceConst.instance().isLogin);
+    pref.setInt(AppSharedPreferenceConst.instance().current_model_index, -1);
   }
 
   static Future<void> setLoginTrue({required String email}) async {
+    int index = -1;
+    for (int i = 0; i < model.length; ++i) {
+      if (model[i].email == email.toLowerCase().trim()) {
+        index = i;
+        break;
+      }
+    }
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString(AppSharedPreferenceConst.instance().email, email);
+    pref.setInt(AppSharedPreferenceConst.instance().current_model_index, index);
     pref.setBool(AppSharedPreferenceConst.instance().isLogin, true);
   }
 
@@ -29,6 +40,13 @@ class SharedPreferenceLogic{
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? email = pref.getString(AppSharedPreferenceConst.instance().email);
     return email;
+  }
+
+  static Future<int?> get_current_model_index() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? current_model_index =
+        pref.getInt(AppSharedPreferenceConst.instance().current_model_index);
+    return current_model_index;
   }
 
   // static Future<bool> isfreshInstall() async {

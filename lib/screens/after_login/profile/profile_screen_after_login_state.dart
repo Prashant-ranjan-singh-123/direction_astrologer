@@ -3,12 +3,12 @@ import 'package:equatable/equatable.dart';
 class ProfileScreenAfterLoginState extends Equatable {
   final bool loading;
   final String name;
-  final String? photo;
+  final String photo;
 
   ProfileScreenAfterLoginState({
     required this.loading,
     name,
-    this.photo
+    required this.photo
   }) : name = name ?? 'Sagar Dattatrey';
 
   ProfileScreenAfterLoginState copyWith({

@@ -240,10 +240,10 @@ class _ProfilePageAfterLoginState extends State<ProfilePageAfterLogin> {
                             ),
                           ),
                           errorWidget: (context, url, error) =>
-                              SvgPicture.asset(
-                            AppAssets.instance().svg_only_brand_logo,
+                              Image.asset(
+                            state.photo,
                             fit: BoxFit
-                                .contain, // Use BoxFit.cover to ensure it fills the circle
+                                .cover, // Use BoxFit.cover to ensure it fills the circle
                           ),
                         ),
                 ),
