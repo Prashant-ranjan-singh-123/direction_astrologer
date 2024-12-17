@@ -14,55 +14,40 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../firebase_options_2.dart';
+import '../../../../model/chat_show_model.dart';
 import 'chat_screen_state.dart';
 
 class ChatScreenCubit extends Cubit<ChatScreenState> {
-  ChatScreenCubit() : super(ChatScreenState(loading: true, email: null));
+  ChatScreenCubit()
+      : super(ChatScreenState(
+            loading: true, users: []));
 
   Future<FirebaseApp> initializeSecondaryApp() async {
     return await Firebase.initializeApp(
       name: 'secondaryApp',
-      options: DefaultFirebaseOptionsTwo.currentPlatform, // Use options from DefaultFirebaseOptionsTwo
+      options: DefaultFirebaseOptionsTwo
+          .currentPlatform, // Use options from DefaultFirebaseOptionsTwo
     );
   }
 
-  Future<void> getData() async {
+  void getData() async {
+    emit(state.copyWith(loading: true));
+
     final secondaryApp = await initializeSecondaryApp();
     final firestore = FirebaseFirestore.instanceFor(app: secondaryApp);
-
-    // final snapshot = await firestore.collection('Father Daniel Jones').get();
-    // for (var doc in snapshot.docs) {
-    //   print('${doc.id}: ${doc.data()}');
-    // }
+    int? number = await SharedPreferenceLogic.get_current_model_index();
+    List<ChatShowModel> users = [];
 
     final querySnapshot = await firestore
-        .collection('Father Daniel Jones') // Main collection
-        .doc('PRASHANT RANJAN SINGH')      // Specific document for the user
-        .collection('messages')            // Sub-collection for messages
-        .orderBy('timestamp', descending: true) // Order by timestamp
-        .get();                            // Execute the query to get results
+        .collection(model[number!]
+            .firebase_id) // Collection based on the astrologer's name
+        .get();
 
-    // Print each message document
     for (var doc in querySnapshot.docs) {
-      print('${doc.id}: ${doc.data()}');
+      // users.add(doc.id);
+      users.add(ChatShowModel(name: doc.id, image: doc.data()['image']));
+      print(doc.data()['image']);
     }
-
-    // emit(state.copyWith(loading: true));
-    // var email = await SharedPreferenceLogic.getEmail();
-    // var name;
-    // for(var items in model){
-    //   if(items.email==email){
-    //     name = items.userName;
-    //     break;
-    //   }
-    // }
-    //
-    // try {
-    //   await ZIMKit()
-    //       .connectUser(id: email!, name: name);
-    // } catch (e){
-    //   print('Exception tagda vaala: $e');
-    // }
-    // emit(state.copyWith(loading: false, email: email));
+    emit(state.copyWith(loading: false, users: users));
   }
 }
